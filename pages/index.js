@@ -1,20 +1,42 @@
 import Head from "next/head";
 import Link from "next/link";
 import Layout, { siteTitle } from "../components/layout";
+import { getSortedPostsData } from "../lib/posts";
 import utilStyles from "../styles/utils.module.css";
 
-const Home = () => (
+const Home = ({ allPostsData }) => (
   <Layout home>
     <Head>
       <title>{siteTitle}</title>
     </Head>
     <section className={utilStyles.headingMd}>
       <p>This is a Next.js site created by following the basics tutorial</p>
-      <Link href="/posts/first-post">
-        <a>Read this post!</a>
-      </Link>
+    </section>
+    <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+      <h2 className={utilStyles.headingLg}>Blog</h2>
+      <ul className={utilStyles.list}>
+        {allPostsData.map(({ id, date, title }) => (
+          <li className={utilStyles.listItem} key={id}>
+            {title}
+            <br />
+            {id}
+            <br />
+            {date}
+          </li>
+        ))}
+      </ul>
     </section>
   </Layout>
 );
+
+export const getStaticProps = async () => {
+  const allPostsData = getSortedPostsData();
+
+  return {
+    props: {
+      allPostsData,
+    },
+  };
+};
 
 export default Home;
