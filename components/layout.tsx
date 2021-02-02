@@ -6,7 +6,12 @@ import Link from "next/link";
 const name = "Mike";
 export const siteTitle = "Example Site";
 
-const Layout = ({ children, home }) => (
+type LayoutProps = {
+  children: any;
+  home?: boolean;
+};
+
+const Layout = ({ children, home }: LayoutProps) => (
   <div className={styles.container}>
     <Head>
       <link rel="icon" href="/favicon.ico" />
